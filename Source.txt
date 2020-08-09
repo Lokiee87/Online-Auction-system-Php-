@@ -1,0 +1,329 @@
+?php
+Class Add_auction extends Controller
+{
+ function __construct()
+ {
+ parent:: __construct();
+ }
+ public function index()
+ {
+ $this->view->render('add_auction');
+ }
+// public function index()
+// {
+// if(isset($_SESSION['email']))
+// {
+// $this->view->add_car=$this->model->insert();
+// $this->view->render('add_car');
+// }
+/ else
+// {
+// echo '<script>window.location.replace("../login?fail")</script>';
+// }
+//
+// }
+ public function insert()
+ {
+ $data=array(
+ 'place'=>$_POST['place'],
+ 'image'=>$_FILES['image']['name'],
+ 'description'=>$_POST['description'],
+ 'type'=>$_POST['type'],
+ 'district'=>$_POST['district'],
+ 'start'=>$_POST['start'],
+ 'end'=>$_POST['end']
+ );
+// print_r( $data);
+// exit;
+ $this->model->insert($data);
+// print_r( $this->model->insert);
+// exit;
+ }
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <title>Online Auction | add_product</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link href="style.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" type="text/css" href="stylesheet/styles.css" />
+ <script language="javascript" type="text/javascript">
+ function clearText(field) {
+ if (field.defaultValue == field.value) field.value = '';
+ else if (field.value == '') field.value = field.defaultValue;
+ }
+ </script>
+ <script language="javascript" type="text/javascript" src="scripts/mootools-1.2.1-
+core.js"></script>
+ <script language="javascript" type="text/javascript" src="scripts/mootools-1.2-
+more.js"></script>
+ <script language="javascript" type="text/javascript" src="scripts/slideitmoo-1.1.js"></script>
+ <script language="javascript" type="text/javascript">
+ window.addEvents({
+'domready': function () { /* thumbnails example , div containers */
+ new SlideItMoo({
+ overallContainer: 'SlideItMoo_outer',
+ elementScrolled: 'SlideItMoo_inner',
+ thumbsContainer: 'SlideItMoo_items',
+ itemsVisible: 5,
+ elemsSlide: 3,
+ duration: 200,
+ itemsSelector: '.SlideItMoo_element',
+ itemWidth: 140,
+ showControls: 1
+ });
+ },
+ });
+ </script>
+</head>
+< `body>
+<div id="wrapper">
+ <div id="menu">
+ <ul>
+ <h1 style="margin-top:30px;color:white; text-align:center;"> Online Auction 
+management system</h1>
+ </ul>
+ <form action="buy_report/logout" method="post">
+ <input type="submit" value="logout" style="float:right;margin-top:-35px;">
+ </form>
+ </div>
+ <!-- end of header_bar -->
+ <div class="cleaner"></div>
+ <div id="sidebar">
+ <div class="sidebar_top"></div>
+ <div class="sidebar_bottom"></div>
+ <div class="sidebar_section">
+ <div class="cleaner"></div>
+ </div>
+ <div class="sidebar_section">
+ <h5></h5>
+ <ul class="categories_list">
+ <li><a href="<?php echo BASE_PATH;?>home" >Home</a></li>
+ <li><a href="<?php echo BASE_PATH;?>add_product" class="current" >Add Products 
+</a></li>
+ <li><a href="<?php echo BASE_PATH;?>buy_report" >Buy Report </a></li>
+ <li><a href="<?php echo BASE_PATH;?>login/logout" >Logout</a></li>
+/ul>
+ </div>
+ </div>
+ <!-- end of sidebar -->
+ <div id="content">
+ <!-- end of latest_content_gallery -->
+ <div class="content_section">
+ <h2>Add Products </h2>
+ <form action="add_product/insert" method="post" enctype="multipart/form-data">
+ <table>
+ <tr>
+ <td>
+ <label >Product Name:</label>
+ </td>
+ <td>
+ <input type="text" name="name" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+<label >Product Image</label>
+ </td>
+ <td>
+ <input type="file" name="image" size="10" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Category</label>
+ </td>
+ <td>
+ <select class="input_field" name="category" >
+ <option value="vehicle" >Vehicles
+ </option>
+ <option value="jewellery" >Jewellery
+ </option>
+ <option value="electronic" >Electronic
+ </option>
+ <option value="dress" >Dress
+ </option>
+ <option value="sports" >Sports
+ </option>
+ <option value="books">Books
+</option>
+ <option value="things">Things
+ </option>
+ </select>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Quality</label>
+ </td>
+ <td>
+ <select class="input_field" name="quality" >
+ <option value="1" >1
+ </option>
+ <option value="2" >2
+ </option>
+ <option value="3" >3
+ </option>
+ </select>
+ </td>
+ </tr>
+ <tr>
+<td>
+ <label >Auction start date</label>
+ </td>
+ <td>
+ <input type="date" name="offerfrom" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Auction end date</label>
+ </td>
+ <td>
+ <input type="date" name="offerend" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Auction start from the prize</label>
+ </td>
+ <td>
+ <input type="text" name="cost" class="input_field" required/>
+ </td>
+</tr>
+ <tr>
+ <td>
+ <label > Description</label>
+ </td>
+ <td>
+ <input type="text" name="description" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Auction type</label>
+ </td>
+ <td>
+ <select class="input_field" name="type" >
+ <option value="vehicle" >Vehicles
+ </option>
+ <option value="jewellry" >Jewellery
+ </option>
+ <option value="electronic" >Electronic
+ </option>
+ <option value="dress" >Dress
+ </option>
+<option value="sports" >Sports
+ </option>
+ <option value="books">Books
+ </option>
+ <option value="things">Things
+ </option>
+ </select>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >District</label>
+ </td>
+ <td>
+ <select class="input_field" name="district" >
+ <option value="chennai" >Chennai
+ </option>
+ <option value="coimbatore" >Coimbatore
+ </option>
+ <option value="trichy" >Trichy
+ </option>
+ <option value="thanjavur" >Thanjavur
+ </option>
+ <option value="salem" >Salem
+/option>
+ <option value="erode">Erode
+ </option>
+ <option value="madurai">Madurai
+ </option>
+ </select>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Auction start from:</label>
+ </td>
+ <td>
+ <input type="date" name="start" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label >Auction end date:</label>
+ </td>
+ <td>
+<input type="date" name="end" class="input_field" required/>
+ </td>
+ </tr>
+ <tr>
+ <td> </td>
+ <td>
+ <input type="submit" value="Add auction place" class="input_field" />
+ </td>
+ </tr>
+ </table>
+ <h6></h6>
+ </form>
+ <div class="col-md-4 col-md-offset-4">
+ <?php
+ if(isset($_GET['success']))
+ {
+ ?>
+ <label class=" pull-right alert alert-info "><center><marquee style="color:red;fontweight:bold;">Add new auction place successfully ! </marquee></center></label>
+ <?php
+ }
+?>
+ </div>
+ </div>
+ </div>
+ <!-- end of content -->
+</div>
+<!-- end of wrapper -->
+<div id="footer_wrapper">
+ <div id="footer">
+ <ul class="footer_menu">
+ <li><a href="<?php echo BASE_PATH;?>home" class="current">Home</a></li>
+ <li><a href="<?php echo BASE_PATH;?>register" >Register</a></li>
+ <li><a href="<?php echo BASE_PATH;?>login" >Login</a></li>
+ </ul>
+ <!-- end of footer -->
+ </div>
+ <!-- end of footer_wrapper -->
+</body>
+</html>
+<?php
+Class Add_product extends Controller
+{
+ function __construct()
+ {
+ parent:: __construct();
+ }
+ public function index()
+ {
+ if(isset($_SESSION['email']))
+ {
+//print_r(($_SESSION['email']));
+//exit;
+ $this->view->render('add_product');
+ }
+ else
+ {
+ echo '<script>window.location.replace("../login?fail")</script>';
+ }
+ }
+ public function insert()
+
+
+
+
+
+
+
+
